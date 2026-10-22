@@ -183,6 +183,7 @@ body {
   color: #cccccc;
 }
 
+/* Favorites Button */
 .favorite-button {
   width: 100%;
   padding: 0.75rem;
@@ -206,25 +207,62 @@ body {
   border-color: #e50914;
 }
 
+/* Watchlist Button */
+.watchlist-button {
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background-color: #244c3b;
+  color: #ffffff;
+  border: 2px solid #347456;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.watchlist-button:hover {
+  background-color: #347456;
+  border-color: #347456;
+}
+
+.watchlist-button.watchlisted {
+  background-color: #333333;
+  border-color: #555555;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .header-content {
     flex-direction: column;
     text-align: center;
   }
-  
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .search-container {
+    width: 100%;
+    justify-content: center;
+  }
+
   .search-input {
     width: 250px;
+    max-width: 100%;
   }
-  
+
   .app-title {
     font-size: 2rem;
   }
-  
+
   .main-content {
     padding: 1rem;
   }
-  
+
   .movie-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1.5rem;

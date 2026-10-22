@@ -1,21 +1,43 @@
-function MovieCard({ movie, favorites = [], addToFavorites, removeFromFavorites }) {
+import { useMovieContext } from '../contexts/MovieContext';
+
+function MovieCard({
+  movie,
+  favorites = [],
+  addToFavorites,
+  removeFromFavorites,
+}) {
+  const { watchlist, addToWatchlist, removeFromWatchlist } =
+    useMovieContext();
+
   const isFavorite = favorites.some(
     (favorite) => favorite.id === movie.id
   );
 
+  const isInWatchlist = watchlist.some(
+    (item) => item.id === movie.id
+  );
+
   const posterUrl = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    : "https://placehold.co/300x450/667eea/ffffff?text=No+Poster";
+    : 'https://placehold.co/300x450/667eea/ffffff?text=No+Poster';
 
   const releaseYear = movie.release_date
     ? movie.release_date.substring(0, 4)
-    : "Year unknown";
+    : 'Year unknown';
 
   function handleFavoriteClick() {
     if (isFavorite) {
       removeFromFavorites?.(movie.id);
     } else {
       addToFavorites?.(movie);
+    }
+  }
+
+  function handleWatchlistClick() {
+    if (isInWatchlist) {
+      removeFromWatchlist(movie.id);
+    } else {
+      addToWatchlist(movie);
     }
   }
 
@@ -30,18 +52,28 @@ function MovieCard({ movie, favorites = [], addToFavorites, removeFromFavorites 
 
         <div className="movie-details">
           <span className="movie-rating">
-            ⭐ {movie.vote_average?.toFixed(1) ?? "N/A"}
+            ⭐ {movie.vote_average?.toFixed(1) ?? 'N/A'}
           </span>
 
           <span className="movie-year">{releaseYear}</span>
         </div>
 
         <button
-          className="favorite-button"
+          className={`favorite-button ${isFavorite ? 'favorited' : ''}`}
           onClick={handleFavoriteClick}
           type="button"
         >
-          {isFavorite ? "♥ Remove from Favorites" : "♡ Add to Favorites"}
+          {isFavorite ? '♥ Remove from Favorites' : '♡ Add to Favorites'}
+        </button>
+
+        <button
+          className={`watchlist-button ${isInWatchlist ? 'watchlisted' : ''}`}
+          onClick={handleWatchlistClick}
+          type="button"
+        >
+          {isInWatchlist
+            ? '✓ Remove from Watchlist'
+            : '+ Add to Watchlist'}
         </button>
       </div>
     </div>

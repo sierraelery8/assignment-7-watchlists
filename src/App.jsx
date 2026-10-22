@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
+import Watchlist from './pages/Watchlist';
+import { MovieProvider } from './contexts/MovieContext';
 import './App.css';
 
 function App() {
@@ -36,34 +38,38 @@ function App() {
   }
 
   return (
-    <Router>
-      <div className="app">
-        <Header />
+    <MovieProvider>
+      <Router>
+        <div className="app">
+          <Header />
 
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Home
-                favorites={favorites}
-                addToFavorites={addToFavorites}
-                removeFromFavorites={removeFromFavorites}
-              />
-            }
-          />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  favorites={favorites}
+                  addToFavorites={addToFavorites}
+                  removeFromFavorites={removeFromFavorites}
+                />
+              }
+            />
 
-          <Route
-            path="/favorites"
-            element={
-              <Favorites
-                favorites={favorites}
-                removeFromFavorites={removeFromFavorites}
-              />
-            }
-          />
-        </Routes>
-      </div>
-    </Router>
+            <Route
+              path="/favorites"
+              element={
+                <Favorites
+                  favorites={favorites}
+                  removeFromFavorites={removeFromFavorites}
+                />
+              }
+            />
+
+            <Route path="/watchlist" element={<Watchlist />} />
+          </Routes>
+        </div>
+      </Router>
+    </MovieProvider>
   );
 }
 
